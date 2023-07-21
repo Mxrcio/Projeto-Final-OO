@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurante Delivery</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+
+  <style>
+
+    body {
+      font-family: 'arial black', cursive;
+      font-size: 20px;
+      font-weight: bold;
+      color: white;
+      background-image: url('https://media.tenor.com/BhbOPAvXLh0AAAAC/pizza-trippy.gif');
+      margin: 0;
+      padding: 0;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Adiciona um contorno à fonte */
+    }
+
+
+    h1 {
+      font-size: 48px;
+      font-weight: bold;
+      text-align: center;
+      color: #FF5733;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      margin-top: 40px;
+    }
+
+    h2 {
+      font-size: 36px;
+      font-weight: bold;
+      text-align: center;
+      color: #FF5733;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    p {
+      font-size: 18px;
+      text-align: center;
+      color: #333;
+    }
+
+    .animated-title {
+      position: relative;
+      display: inline-block;
+      animation: moveLeftRight 2s linear infinite, fadeInOut 3s ease infinite;
+    }
+
+
+    @keyframes moveLeftRight {
+      0%, 100% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(10px);
+      }
+    }
+
+    @keyframes fadeInOut {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.7;
+      }
+    }
+
+    .cart-icon {
+      position: fixed;
+      top: 20px;
+      right: 250px;
+      font-size: 30px; /* Adjust the font-size as per your preference */
+      color: #FF5733;
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+    }
+
+    .cart {
+      position: fixed;
+      top: 20px;
+      right: -320px;
+      width: 300px;
+      height: calc(100% - 40px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      z-index: 9999;
+      transition: right 0.3s ease;
+    }
+
+    .show {
+      right: 20px;
+    }
+
+    .cart h2 {
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+      margin-bottom: 15px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    
+
+    .close-cart {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 20px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .menu-type {
+      margin-bottom: 30px;
+    }
+
+    .menu-type h3 {
+      font-size: 28px;
+      font-weight: bold;
+      color: #FF5733;
+      margin-bottom: 10px;
+    }
+
+    .menu-item {
+      background-color: #FF8C00; /* Darker shade of orange */
+      border: 1px solid #E0E0E0;
+      border-radius: 10px;
+      padding: 15px 20px;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .menu-item:hover {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+  
+    .menu-item h3 {
+      font-size: 24px;
+      font-weight: bold;
+      color: white; /* Text color set to white */
+      margin: 0;
+    }
+  
+    .menu-item p {
+      font-size: 18px;
+      color: white; /* Text color set to white */
+      margin: 5px 0;
+    }  
+  
+    .icon {
+      width: 24px;
+      height: 24px;
+      fill: #FF5733;
+      margin-left: 5px;
+    }
+  
+    .menu-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #FFF;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      border-radius: 8px;
+      z-index: 9999;
+    }
+
+    .menu-popup h3 {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .menu-popup p {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 5px;
+    }
+
+    .menu-popup button {
+      font-size: 18px;
+      font-weight: bold;
+      color: #FFF;
+      background-color: #FF5733;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .menu-popup button:hover {
+      background-color: #E04E24;
+    }
+
+    .btn {
+      font-size: 18px;
+      font-weight: bold;
+      color: #FFF;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .btn-danger {
+      background-color: #FF5733;
+    }
+
+    .btn-danger:hover {
+      background-color: #E04E24;
+    }
+
+    .btn-success {
+      background-color: #27AE60;
+    }
+
+    .btn-success:hover {
+      background-color: #219653;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <header>
+    <h1><strong>Restaurante Delivery</strong></h1>
+    <p class="animated-title" style="color: #ffffff; font-size: 24px;"><strong>PEÇA NOSSOS PRATOS DELICIOSOS E RECEBA EM CASA!</strong></p>
+    <p style="color: #ffffff; font-size: 28px;"><strong><i class="bi bi-telephone"></i> Telefone:</strong> 4002-8922</p>
+    <p style="color: #ffffff; font-size: 28px;"><strong><i class="bi bi-envelope"></i> Email:</strong> RESTAURANTE@GMAIL.COM</p>    
+    
+
+   <button class="cart-icon" onclick="toggleCart()">
+      <i class="fas fa-shopping-cart"></i>
+      <span class="cart-item-count">0</span>
+    </button>
+  </header>
+
+  <div class="container">
+    <h2 class="animated-title">CARDÁPIO</h2>
+    <div class="menu-type">
+      <h3>Entradas</h3>
+      <div class="row g-4">
+        <!-- Prato existente 1 -->
+        <div class="col-md-4">
+          <div class="menu-item" onclick="showPopup('rolinhos-vegetarianos', 'Rolinhos de Primavera Vegetarianos', 12.50)">
+            <h3>Rolinhos de Primavera Vegetarianos</h3>
+
+            <p>Preço: R$ 12,50</p>
+            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.41 15.59L13 12l-3.59-3.59L11 7l5 5-5 5-1.59-1.41z" />
+            </svg>
+          </div>
+        </div>
+        <!-- Novo prato 1 -->
+        <div class="col-md-4">
+          <div class="menu-item" onclick="showPopup('pasteis-queijo', 'Pastéis de Queijo', 10.00)">
+            <h3>Pastéis de Queijo</h3>
+
+            <p>Preço: R$ 10,00</p>
+            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.41 15.59L13 12l-3.59-3.59L11 7l5 5-5 5-1.59-1.41z" />
+            </svg>
+          </div>
+        </div>
+        <!-- Novo prato 2 -->
+        <div class="col-md-4">
+          <div class="menu-item" onclick="showPopup('caldo-feijao', 'Caldo de Feijão', 8.00)">
+            <h3>Caldo de Feijão</h3>
+
+            <p>Preço: R$ 8,00</p>
+            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.41 15.59L13 12l-3.59-3.59L11 7l5 5-5 5-1.59-1.41z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Pratos Principais -->
+    <div class="menu-type">
+      <h3>Pratos Principais</h3>
+      <div class="row g-4">
+        <!-- Prato existente 1 -->
+        <div class="col-md-4">
+          <div class="menu-item" onclick="showPopup('strogonoff-frango', 'Strogonoff de Frango', 20.00)">
+            <h3>Strogonoff de Frango</h3>
+
+            <p>Preço: R$ 20,00</p>
+            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.41 15.59L13 12l-3.59-3.59L11 7l5 5-5 5-1.59-1.41z" />
+            </svg>
+          </div>
+        </div>
+        <!-- Novo prato 1 -->
+        <div class="col-md-4">
+          <div class="menu-item" onclick="showPopup('pizza-calabresa', 'Pizza de Calabresa', 25.00)">
+            <h3>Pizza de Calabresa</h3>
+
+            <p>Preço: R$ 25,00</p>
+            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.41 15.59L13 12l-3.59-3.59L11 7l5 5-5 5-1.59-1.41z" />
+            </svg>
+          </div>
+        </div>
+        <!-- Novo prato 2 -->
+        <div class="col-md-4">
+          <div class="menu-item" onclick="showPopup('risoto-camarao', 'Risoto de Camarão', 28.00)">
+            <h3>Risoto de Camarão</h3>
+
+            <p>Preço: R$ 28,00</p>
+            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.41 15.59L13 12l-3.59-3.59L11 7l5 5-5 5-1.59-1.41z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Bebidas -->
+    <div class="menu-type">
+      <h3>Bebidas</h3>
+      <div class="row g-4">
+        <!-- Prato existente 1 -->
+        <div class="col-md-4">
+          <div class="menu-item" onclick="showPopup('agua-mineral', 'Água Mineral (500ml)', 4.00)">
+            <h3>Água Mineral (500ml)</h3>
+
+            <p>Preço: R$ 4,00</p>
+            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.41 15.59L13 12l-3.59-3.59L11 7l5 5-5 5-1.59-1.41z" />
+            </svg>
+          </div>
+        </div>
+        <!-- Novo prato 1 -->
+        <div class="col-md-4">
+          <div class="menu-item" onclick="showPopup('suco-laranja', 'Suco de Laranja Natural', 6.00)">
+            <h3>Suco de Laranja Natural</h3>
+
+            <p>Preço: R$ 6,00</p>
+            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.41 15.59L13 12l-3.59-3.59L11 7l5 5-5 5-1.59-1.41z" />
+            </svg>
+          </div>
+        </div>
+        <!-- Novo prato 2 -->
+        <div class="col-md-4">
+          <div class="menu-item" onclick="showPopup('caipirinha-limao', 'Caipirinha de Limão', 15.00)">
+            <h3>Caipirinha de Limão</h3>
+
+            <p>Preço: R$ 15,00</p>
+            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.41 15.59L13 12l-3.59-3.59L11 7l5 5-5 5-1.59-1.41z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Sobremesas -->
+    <div class="menu-type">
+      <h3>Sobremesas</h3>
+      <div class="row g-4">
+        <!-- Prato existente 1 -->
+        <div class="col-md-4">
+          <div class="menu-item" onclick="showPopup('pudim-leite-condensado', 'Pudim de Leite Condensado', 9.50)">
+            <h3>Pudim de Leite Condensado</h3>
+   
+            <p>Preço: R$ 9,50</p>
+            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.41 15.59L13 12l-3.59-3.59L11 7l5 5-5 5-1.59-1.41z" />
+            </svg>
+          </div>
+        </div>
+        <!-- Novo prato 1 -->
+        <div class="col-md-4">
+          <div class="menu-item" onclick="showPopup('torta-chocolate', 'Torta de Chocolate', 12.00)">
+            <h3>Torta de Chocolate</h3>
+
+            <p>Preço: R$ 12,00</p>
+            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.41 15.59L13 12l-3.59-3.59L11 7l5 5-5 5-1.59-1.41z" />
+            </svg>
+          </div>
+        </div>
+        <!-- Novo prato 2 -->
+        <div class="col-md-4">
+          <div class="menu-item" onclick="showPopup('creme-papaya', 'Creme de Papaia', 10.00)">
+            <h3>Creme de Papaia</h3>
+
+            <p>Preço: R$ 10,00</p>
+            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.41 15.59L13 12l-3.59-3.59L11 7l5 5-5 5-1.59-1.41z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <div class="menu-popup" id="menuPopup">
+    <h3 id="popupItemName">Nome do Item</h3>
+    <p id="popupItemType">//: </p>
+    <p id="popupItemPrice">Preço: </p>
+    <button class="btn btn-success" onclick="addToCart()">Adicionar ao Carrinho</button>
+  </div>
+
+  <div class="cart" id="cart">
+    <span class="close-cart" onclick="toggleCart()">&times;</span>
+    <h2>Carrinho de Compras</h2>
+    <div id="cartItems">
+    </div>
+    <p class="cart-total">Total: R$ <span id="cartTotal">0.00</span></p>
+    
+    <button class="btn btn-danger" onclick="clearCart()">Limpar Carrinho</button>
+    <button class="btn btn-success" onclick="finishOrder()">Finalizar Compra</button>
+  </div>
+
+  <script>
+    let cartItems = [];
+    let cartTotal = 0;
+    const menuPopup = document.getElementById('menuPopup');
+    const cartItemsElement = document.getElementById('cartItems');
+    const cartTotalElement = document.getElementById('cartTotal');
+  
+    function showPopup(itemId, itemName, itemPrice) {
+      const popupItemName = document.getElementById('popupItemName');
+      const popupItemType = document.getElementById('popupItemType');
+      const popupItemPrice = document.getElementById('popupItemPrice');
+  
+      popupItemName.textContent = itemName;
+      popupItemType.textContent = '//: ' + itemId.split('-').join(' ');
+      popupItemPrice.textContent = 'Preço: R$ ' + itemPrice.toFixed(2);
+  
+      menuPopup.style.display = 'block';
+    }
+  
+    function addToCart() {
+      const itemName = document.getElementById('popupItemName').textContent;
+      const itemPrice = parseFloat(document.getElementById('popupItemPrice').textContent.split('R$ ')[1]);
+  
+      const existingItem = cartItems.find(item => item.name === itemName);
+      if (existingItem) {
+        existingItem.quantity++;
+        existingItem.totalPrice += itemPrice;
+      } else {
+        cartItems.push({ name: itemName, price: itemPrice, quantity: 1, totalPrice: itemPrice });
+      }
+  
+      cartTotal += itemPrice;
+      updateCart();
+      hidePopup();
+    }
+  
+    function hidePopup() {
+      menuPopup.style.display = 'none';
+    }
+  
+    function updateCart() {
+      cartItemsElement.innerHTML = '';
+      cartItems.forEach(item => {
+        const cartItemElement = document.createElement('div');
+        cartItemElement.classList.add('cart-item');
+        cartItemElement.innerHTML = `
+          <p>${item.name} - Quantidade: ${item.quantity}</p>
+          <p>R$ ${item.totalPrice.toFixed(2)}</p>
+        `;
+        cartItemsElement.appendChild(cartItemElement);
+      });
+      cartTotalElement.textContent = cartTotal.toFixed(2);
+  
+      const cartItemCountElement = document.querySelector('.cart-icon .cart-item-count');
+      cartItemCountElement.textContent = cartItems.length;
+    }
+  
+    function clearCart() {
+      cartItems = [];
+      cartTotal = 0;
+      updateCart();
+    }
+  
+    function finishOrder() {
+      if (cartItems.length === 0) {
+        alert('O carrinho está vazio. Adicione itens antes de finalizar a compra.');
+        return;
+      }
+  
+      const confirmationMessage = `Você será redirecionado para a página de pagamento. Por favor, confirme os itens do seu carrinho antes de prosseguir.\n\nItens:\n`;
+      const itemsMessage = cartItems.map(item => `${item.name} - Quantidade: ${item.quantity}`).join('\n');
+      const totalMessage = `\n\nTotal: R$ ${cartTotal.toFixed(2)}`;
+  
+      alert(confirmationMessage + itemsMessage + totalMessage);
+  
+      clearCart();
+  
+      window.location.href = 'http://127.0.0.1:8000/site_principal/pagamento/';
+    }
+  
+    function toggleCart() {
+      const cart = document.getElementById('cart');
+      if (cart.style.right === '-320px') {
+        cart.style.right = '20px';
+      } else {
+        cart.style.right = '-320px';
+      }
+    }
+
+  </script>
+  
+</body>
+
+</html>
